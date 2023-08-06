@@ -1,6 +1,18 @@
 import {useState} from "react";
 
-const Dropdown = ({ options, id, selectedValue, onSelectedValueChange }) => (
+interface Option {
+    value: string;
+    label : string;
+}
+
+interface Dropdown{
+    options: Option[];
+    id: string;
+    selectedValue: string;
+    onSelectedValueChange: (value: string) => void;
+}
+
+const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedValueChange }) => (
   <select id={id} onChange={event => onSelectedValueChange(event.target.value)}>
     {options.map(({ value, label }) => (
       <option value={value} selected={value === selectedValue}>
@@ -10,7 +22,7 @@ const Dropdown = ({ options, id, selectedValue, onSelectedValueChange }) => (
   </select>
 );
 
- const options = [
+ const options: Option[] = [
     { value: 'dog', label: 'Dog' },
     { value: 'cat', label: 'Cat' },
     { value: 'hamster', label: 'Hamster' },
@@ -22,9 +34,9 @@ const Dropdown = ({ options, id, selectedValue, onSelectedValueChange }) => (
   
   export default function Canvas () {
     const [selectedValue, setSelectedValue] = useState(initialValue);
-    console.log(selectedValue);
+    
     return (
-      <div>
+      <div className="canvas--container">
         <label for="pet-select">Choose a pet:</label>
         <Dropdown
           options={options}
