@@ -5,6 +5,11 @@ interface Option {
     label : string;
 }
 
+interface Images {
+  id: number;
+  img: string
+}
+
 interface Dropdown{
     options: Option[];
     id: string;
@@ -31,9 +36,20 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
     { value: 'goldfish', label: 'Goldfish' }
   ];
   const initialValue = 'hamster';
+
+  const images: Images[] = [
+    {id: 1, img: "dog"},
+    {id: 2, img: "cat"},
+    {id: 3, img: "hamster"},
+    {id: 4, img: "parrot"},
+    {id: 5, img: "goldfish"},
+  ]
   
   export default function Canvas () {
     const [selectedValue, setSelectedValue] = useState(initialValue);
+
+    const currentImage = images.find(img => img.img === selectedValue);
+    console.log(currentImage)
     
     return (
       <div className="canvas--container">
@@ -44,6 +60,7 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
           selectedValue={selectedValue}
           onSelectedValueChange={setSelectedValue}
         />
+        <img src={`../Images/${currentImage?.img}.jpg`} />
       </div>
     );
   };
