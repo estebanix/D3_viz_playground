@@ -30,19 +30,14 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
  const options: Option[] = [
     { value: 'dog', label: 'Dog' },
     { value: 'cat', label: 'Cat' },
-    { value: 'hamster', label: 'Hamster' },
-    { value: 'parrot', label: 'Parrot' },
-    { value: 'spider', label: 'Spider' },
-    { value: 'goldfish', label: 'Goldfish' }
+    { value: 'hamster', label: 'Hamster' }
   ];
   const initialValue = 'hamster';
 
   const images: Images[] = [
     {id: 1, img: "dog"},
     {id: 2, img: "cat"},
-    {id: 3, img: "hamster"},
-    {id: 4, img: "parrot"},
-    {id: 5, img: "goldfish"},
+    {id: 3, img: "hamster"}
   ]
   
   export default function Canvas () {
