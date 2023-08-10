@@ -1,4 +1,5 @@
 import {useState} from "react";
+import Barchart from "./BarChart";
 
 interface Option {
     value: string;
@@ -55,7 +56,7 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
           selectedValue={selectedValue}
           onSelectedValueChange={setSelectedValue}
         />
-        <img src={`../Images/${currentImage?.img}.jpg`} />
+        <Barchart />
       </div>
     );
-  };
+  }
