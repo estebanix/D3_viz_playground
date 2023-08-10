@@ -31,16 +31,13 @@ export const AxisBottom = ({
     <>
       {/* Ticks and labels */}
       {ticks.map(({ value, xOffset }) => (
-        <g
-          key={value}
-          transform={`translate(${xOffset}, 0)`}
-          shapeRendering={"crispEdges"}
-        >
+        <g key={value} transform={`translate(${xOffset}, 0)`}>
           <line
             y1={TICK_LENGTH}
             y2={-height - TICK_LENGTH}
             stroke="#D2D7D3"
             strokeWidth={0.5}
+            shapeRendering={"crispEdges"}
           />
           <text
             key={value}
