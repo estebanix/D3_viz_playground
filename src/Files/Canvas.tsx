@@ -1,5 +1,6 @@
 import {useState} from "react";
-import Barchart from "./BarChart";
+import {Scatterplot} from "./Scatterplot";
+import { data } from "../Datas/data";
 
 interface Option {
     value: string;
@@ -8,7 +9,7 @@ interface Option {
 
 interface Images {
   id: number;
-  img: string
+  clr: string
 }
 
 interface Dropdown{
@@ -29,22 +30,22 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
 );
 
  const options: Option[] = [
-    { value: 'dog', label: 'Dog' },
-    { value: 'cat', label: 'Cat' },
-    { value: 'hamster', label: 'Hamster' }
+    { value: 'green', label: 'Dog' },
+    { value: 'blue', label: 'Cat' },
+    { value: 'red', label: 'Hamster' }
   ];
-  const initialValue = 'hamster';
+  const initialValue = 'green';
 
   const images: Images[] = [
-    {id: 1, img: "dog"},
-    {id: 2, img: "cat"},
-    {id: 3, img: "hamster"}
+    {id: 1, clr: "green"},
+    {id: 2, clr: "blue"},
+    {id: 3, clr: "red"}
   ]
   
   export default function Canvas () {
     const [selectedValue, setSelectedValue] = useState(initialValue);
 
-    const currentImage = images.find(img => img.img === selectedValue);
+    const currentImage = images.find(img => img.clr === selectedValue);
     console.log(currentImage)
     
     return (
@@ -56,7 +57,7 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
           selectedValue={selectedValue}
           onSelectedValueChange={setSelectedValue}
         />
-        <Barchart />
+        <Scatterplot data={data} width={400} height={400} color={currentImage?.clr}/>
       </div>
     );
   }
