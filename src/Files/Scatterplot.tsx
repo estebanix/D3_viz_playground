@@ -19,9 +19,10 @@ type ScatterplotProps = {
   height: number;
   data: DataPoint[];
   state: object;
+  dating: object;
 };
 
-export const Scatterplot = ({ width, height, data, state }: ScatterplotProps) => {
+export const Scatterplot = ({ width, height, data, state, dating }: ScatterplotProps) => {
   
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -56,6 +57,16 @@ export const Scatterplot = ({ width, height, data, state }: ScatterplotProps) =>
      else {
       filteredData = data;
     }
+
+    if (dating === 'small') {
+      filteredData = filteredData.filter(d => d.size < 19000000);
+    } else if (dating === 'medium') {
+      filteredData = filteredData.filter(d => d.size >= 19000000 && d.size < 100000000);
+    } else if (dating === 'large') {
+      filteredData = filteredData.filter(d => d.size >= 100000000);
+    }
+
+    console.log(filteredData);
 
   const allShapes = filteredData.map((d, i) => {
     return (

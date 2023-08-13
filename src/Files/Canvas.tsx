@@ -3,13 +3,15 @@ import {Scatterplot} from "./Scatterplot";
 import { data } from "../Datas/data";
 
 interface Option {
+    id: number;
     value: string;
     label : string;
 }
 
-interface Images {
-  id: number;
-  clr: string
+interface Dating {
+    id: number;
+    value: string;
+    label : string;
 }
 
 interface Dropdown{
@@ -30,39 +32,48 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
 );
 
  const options: Option[] = [
-    { value: 'all', label: 'All Continents' },
-    { value: 'americas', label: 'Americas' },
-    { value: 'africa', label: 'Africa' },
-    { value: 'europe', label: 'Europe' },
-    { value: 'asia', label: 'Asia' },
-    { value: 'oceania', label: 'Oceania' }
+    { id: 1, value: 'all', label: 'All Continents' },
+    { id: 2, value: 'americas', label: 'Americas' },
+    { id: 3, value: 'africa', label: 'Africa' },
+    { id: 4, value: 'europe', label: 'Europe' },
+    { id: 5, value: 'asia', label: 'Asia' },
+    { id: 6, value: 'oceania', label: 'Oceania' }
   ];
-  const initialValue = 'all';
+  const initialOption = 'all';
 
-  const images: Images[] = [
-    {id: 1, clr: "all"},
-    {id: 2, clr: "americas"},
-    {id: 3, clr: "africa"},
-    {id: 4, clr: "europe"},
-    {id: 5, clr: "asia"},
-    {id: 6, clr: "oceania"}
-  ]
+  const dating: Dating[] = [
+    {id: 1, value: 'all', label: 'All'},
+    {id: 2, value: 'small', label: 'Small'},
+    {id: 3, value: 'medium', label: 'Medium'},
+    {id: 4, value: 'large', label: 'Large'}
+  ];
+  const initialDate = 'all';
   
   export default function Canvas () {
-    const [selectedValue, setSelectedValue] = useState(initialValue);
+    const [selectedValue, setSelectedValue] = useState(initialOption);
+    const [selectedDate, setSelectedDate] = useState(initialDate);
 
-    const currentImage = images.find(img => img.clr === selectedValue);
+    const currentImage = options.find(dat => dat.value === selectedValue);
+    const currentDate = dating.find(dat => dat.value === selectedDate);
     
     return (
       <div className="canvas--container">
         <label for="pet-select">Choose a continent:</label>
-        <Dropdown
-          options={options}
-          id="pet-select"
-          selectedValue={selectedValue}
-          onSelectedValueChange={setSelectedValue}
-        />
-        <Scatterplot data={data} width={400} height={400} state={currentImage?.clr}/>
+        <div className="select--box">
+          <Dropdown
+            options={options}
+            id="continent-select"
+            selectedValue={selectedValue}
+            onSelectedValueChange={setSelectedValue}
+          />
+          <Dropdown
+            options={dating}
+            id="dating-select"
+            selectedValue={selectedDate}
+            onSelectedValueChange={setSelectedDate}
+          />
+        </div>
+        <Scatterplot data={data} width={400} height={400} state={currentImage?.value} dating={currentDate?.value}/>
       </div>
     );
   }

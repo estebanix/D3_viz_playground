@@ -23,9 +23,16 @@ body{
   gap: 50px;
 }
 
-img{
-  width: 200px;
+.select--box{
+  width: 80%;
   height: auto;
+  display: flex;
+  gap: 30px;
+}
+
+select{
+  width: 200px;
+  cursor: pointer;
 }
 
 .tooltip {
