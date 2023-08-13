@@ -18,9 +18,11 @@ type ScatterplotProps = {
   width: number;
   height: number;
   data: DataPoint[];
+  state: object;
 };
 
-export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
+export const Scatterplot = ({ width, height, data, state }: ScatterplotProps) => {
+  
   const boundsWidth = width - MARGIN.right - MARGIN.left;
   const boundsHeight = height - MARGIN.top - MARGIN.bottom;
 
@@ -38,8 +40,24 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
     .domain(allGroups)
     .range(["#e0ac2b", "#e85252", "#6689c6", "#9a6fb0", "#a53253"]);
 
-  // Build the shapes
-  const allShapes = data.map((d, i) => {
+    let filteredData: DataPoint[] = [];
+
+    if (state === 'europe') {
+      filteredData = data.filter(d => d.group === 'Europe');
+    } else if (state === 'asia') {
+      filteredData = data.filter(d => d.group === 'Asia');
+    } else if (state === 'africa') {
+      filteredData = data.filter(d => d.group === 'Africa');
+    } else if (state === 'americas') {
+      filteredData = data.filter(d => d.group === 'Americas');
+    } else if (state === 'oceania') {
+      filteredData = data.filter(d => d.group === 'Oceania');
+    }
+     else {
+      filteredData = data;
+    }
+
+  const allShapes = filteredData.map((d, i) => {
     return (
       <circle
         key={i}
@@ -69,10 +87,9 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
           height={boundsHeight}
           transform={`translate(${[MARGIN.left, MARGIN.top].join(",")})`}
         >
-          {/* Y axis */}
+
           <AxisLeft yScale={yScale} pixelsPerTick={40} width={boundsWidth} />
 
-          {/* X axis, use an additional translation to appear at the bottom */}
           <g transform={`translate(0, ${boundsHeight})`}>
             <AxisBottom
               xScale={xScale}
@@ -80,13 +97,10 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
               height={boundsHeight}
             />
           </g>
-
-          {/* Circles */}
           {allShapes}
         </g>
       </svg>
 
-      {/* Tooltip */}
       <div
         style={{
           width: boundsWidth,
