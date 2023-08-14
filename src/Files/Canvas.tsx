@@ -73,6 +73,7 @@ const Dropdown: React.FC<Dropdown> = ({ options, id, selectedValue, onSelectedVa
             onSelectedValueChange={setSelectedDate}
           />
         </div>
+        <input type="range" />
         <Scatterplot data={data} width={400} height={400} state={currentImage?.value} dating={currentDate?.value}/>
       </div>
     );
