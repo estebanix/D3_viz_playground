@@ -1,50 +1,25 @@
-import { useRef, useEffect } from "react";
-import * as d3 from "d3";
+import {select} from "d3";
+import { useEffect, useRef, useState } from "react";
 
-const ScatterPlot = ({ data, width, height }) => {
+export default function Scatterplot(){
+  const [data, setData] = useState([40, 22, 52, 98, 67])
   const svgRef = useRef();
 
   useEffect(() => {
-    // Clear any previous content
-    d3.select(svgRef.current).selectAll("*").remove();
-
-    // Create an SVG container
-    const svg = d3.select(svgRef.current)
-      .attr("width", width)
-      .attr("height", height);
-
-    // Create scales for x and y dimensions
-    const xScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.x))
-      .range([0, width]);
-
-    const yScale = d3.scaleLinear()
-      .domain(d3.extent(data, d => d.y))
-      .range([height, 0]);
-
-    // Create x-axis and y-axis
-    const xAxis = d3.axisBottom(xScale);
-    const yAxis = d3.axisLeft(yScale);
-
-    svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(xAxis);
-
-    svg.append("g")
-      .call(yAxis);
-
-    // Create circles for each data point
-    svg.selectAll("circle")
+    const svg = select(svgRef.current);
+    svg
+      .selectAll("circle")
       .data(data)
-      .enter()
-      .append("circle")
-      .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(d.y))
-      .attr("r", 5)
-      .attr("fill", "steelblue");
-  }, [data, width, height]);
+      .join("circle")
+      .attr("r", value => value)
+      .attr("cy", value => value * 3)
+      .attr("cx", value => value * 3)
+      .attr("fill", value => `#3FEAF5${value}`)
+  }, [data])
 
-  return <svg ref={svgRef}></svg>;
-};
-
-export default ScatterPlot;
+  return(
+    <main>
+        <svg ref={svgRef} width={500} height={500}></svg>
+    </main>
+  );
+}
